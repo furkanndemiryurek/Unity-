@@ -11,8 +11,13 @@ public class FPSMouseLook : MonoBehaviour
     float xRot;
     [SerializeField] private Transform playerBody;
 
+    public Transform leaner;
+    public float zRot;
+    bool isRotating;
+
     private void Start()
     {
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -27,6 +32,35 @@ public class FPSMouseLook : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(xRot, 0, 0);
         playerBody.Rotate(Vector3.up * rotX);
+        Leaner();
+
+    }
+
+    public void Leaner()
+    {
+        if (Input.GetKey(KeyCode.E))
+        {
+            zRot = Mathf.Lerp(zRot, -20.0f, 5f * Time.deltaTime);
+            isRotating = true;
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            zRot = Mathf.Lerp(zRot, 20.0f, 5f * Time.deltaTime);
+            isRotating = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.E) || Input.GetKeyUp(KeyCode.Q))
+        {
+            isRotating = false;
+        }
+
+        if (!isRotating)
+        {
+            zRot = Mathf.Lerp(zRot, 0, 5f * Time.deltaTime);
+        }
+
+        leaner.localRotation = Quaternion.Euler(0, 0, zRot);
     }
 
 }

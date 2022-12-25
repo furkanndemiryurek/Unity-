@@ -15,8 +15,11 @@ public class FPSPlayerController : MonoBehaviour
     [SerializeField] private float speed; // 4
     [SerializeField] private float jumpHeight; // 3
     [SerializeField] private float gravity; // 9.8f
+    [SerializeField] private bool isRuning;
 
     [SerializeField] private LayerMask mask; // ground
+
+    [SerializeField] private float stamina = 10;
 
     private void Start()
     {
@@ -26,10 +29,20 @@ public class FPSPlayerController : MonoBehaviour
     private void Update()
     {
         #region IsSprint
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && stamina > 0)
+        {
             speed = 12;
+            stamina -= Time.deltaTime;
+        }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
             speed = 4;
+        }
+
+        if (stamina <= 0)
+        {
+            speed = 4;
+        }
             #endregion
         Movement();
         Gravity();
@@ -46,7 +59,6 @@ public class FPSPlayerController : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
 
         Vector3 movement = transform.right * horizontal + transform.forward * vertical;
-
 
         characterController.Move(movement * speed * Time.deltaTime);
     }

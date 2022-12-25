@@ -1,5 +1,7 @@
 1- Add a character to your scene.
-2- Add a camera inside the character.
-3- Add "FPSMouseLook" to main camera.
-4- Add "FPSPlayerController" to your character
-5- Give the floor a layer called "GROUND".
+2- Add a Empty GameObject called Leaner inside your character
+3- Lenaer position = (0, character.pos.x / 2, 0)
+4- Add a camera inside the Leaner.
+5- Add "FPSMouseLook" to main camera.
+6- Add "FPSPlayerController" to your character
+7- Give the floor a layer called "GROUND".
